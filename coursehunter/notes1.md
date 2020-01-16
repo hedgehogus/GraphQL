@@ -15,6 +15,7 @@ create file .babelrc
 
 **resolvers** -are simple functions which are assigned to a query or to mutation and contain the logic, which is actually needed
 ---
+```GrapgQL
 query Course($id: String!){
   course (id: $id) {
     id
@@ -24,7 +25,9 @@ query Course($id: String!){
     voteCount
   }
 }
+```
 ---
+```javascript
 query Courses{
   myFirstCourse: course(id: "1"){
     ...courseFields
@@ -43,6 +46,7 @@ fragment courseFields on Course {
   url
   voteCount
 }
+```
 ---
 **fragments - is reusable piece of code for query
 
