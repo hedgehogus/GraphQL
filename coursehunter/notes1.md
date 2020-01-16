@@ -14,6 +14,7 @@ create file .babelrc
 **GraphiQL** - is in browser interactive graphgl IDE. We can wright directly querys mutations in the browser and send those querys mutations to out graphql endpoint. Recomended for testing api
 
 **resolvers** -are simple functions which are assigned to a query or to mutation and contain the logic, which is actually needed
+
 ---
 ```GrapgQL
 query Course($id: String!){
@@ -27,7 +28,7 @@ query Course($id: String!){
 }
 ```
 ---
-```javascript
+```
 query Courses{
   myFirstCourse: course(id: "1"){
     ...courseFields
@@ -48,7 +49,7 @@ fragment courseFields on Course {
 }
 ```
 ---
-**fragments - is reusable piece of code for query
+**fragments - is reusable piece of code for query**
 
 
 
