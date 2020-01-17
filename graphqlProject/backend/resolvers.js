@@ -1,3 +1,7 @@
+import mongoose from 'mongoose';
+import courseModel from './models/course';
+
+
 let coursesData = [
     {
         id: '1',
@@ -7,7 +11,6 @@ let coursesData = [
         topic: 'node.js',
         url: 'https://fdfdfdfd.com',
         voteCount: 0
-
     },
     {
         id: '2',
@@ -17,7 +20,6 @@ let coursesData = [
         topic: 'node.js',
         url: 'https://fdfsdsdfdfd.com',
         voteCount: 0
-
     },
     {
         id: '3',
@@ -27,40 +29,49 @@ let coursesData = [
         topic: 'node.js',
         url: 'https://fdfdfqqqdfd.com',
         voteCount: 0
-
     },
 ]
 
 
 const resolvers = {
     Query: {
-        allCourses: (root, {serchTerm}) => {
-            return coursesData;
+        allCourses: (root, {searchTerm}) => {
+            // return coursesData;
+            console.log(searchTerm) 
+            if (searchTerm !== ''){
+                return courseModel.find({$text: {$search: searchTerm}}).sort({voteCount: 'desc'});
+            } else {
+                return courseModel.find().sort({voteCount: 'desc'});
+            }
         },
         course: (root, {id}) => {
             //return courseModel.findOne({id:id});
-            return coursesData.filter(course => {
+            /*return coursesData.filter(course => {
                 return course.id === id
-            }) [0]
-        }
+            }) [0]*/
+            return courseModel.findOne({id: id});
+        } 
     },
     Mutation: {
         upvote: (root, {id}) => {
-            const course = coursesData.filter(course => {
-                return course.id === id
-            }) [0];
-            course.voteCount++;
-            return course;
+            // const course = coursesData.filter(course => {
+            //     return course.id === id
+            // }) [0]; 
+            // course.voteCount++;
+            // return course;
+            return courseModel.findOneAndUpdate({id: id}, {$inc: {"voteCount": 1}}, {returnNewDocument: true});       
         },
         downvote: (root, {id}) => {
-            const course = coursesData.filter(course => {
-                return course.id === id
-            }) [0];
-            course.voteCount--;
-            return course;
+            // const course = coursesData.filter(course => {
+            //     return course.id === id
+            // }) [0];
+            // course.voteCount--;
+            // return course;
+            return courseModel.findOneAndUpdate({id: id}, {$inc: {"voteCount": -1}}, {returnNewDocument: true});    
         },
         addCourse: (root, {title, author, description, topic, url}) => {
-            return null;
+            const course = new courseModel({title, author, description, topic, url})
+            return course.save();
         }
     }
 }
