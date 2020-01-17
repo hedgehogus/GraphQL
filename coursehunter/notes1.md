@@ -51,4 +51,50 @@ fragment courseFields on Course {
 ---
 https://graphql.org/learn/
 
+https://www.mongodb.com/download-center/community
+https://robomongo.org/download
+https://mongoosejs.com/  (npm install mongoose)
+npm install cors 
+npm install uuid - for uniq ids
 
+```
+mutation UpvoteCourse {
+  upvote(id: "1"){
+    id
+    title
+    voteCount
+  }
+}
+```
+```
+mutation AddCourse {
+  addCourse(title:"title2", author: "anthony", description:"werer", topic: "js", url: "http:/dereek"){
+    id
+    title
+    voteCount
+  }
+}
+```
+---
+```
+query GetAllCourses{
+  allCourses (searchTerm: "js"){
+    id
+    title
+    author
+    description
+    voteCount
+  }
+}
+```
+```
+query GetAllCourses{
+  course (id: "123") {
+    id
+    title
+    author
+    description
+    voteCount
+  }
+}
+```
