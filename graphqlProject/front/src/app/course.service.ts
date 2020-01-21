@@ -34,7 +34,7 @@ export class CourseService {
       .valueChanges
       .pipe(
         map((result) => {
-          result.data.allCourses as Course[]
+          return result.data.allCourses
         })
       );
   }
@@ -42,13 +42,13 @@ export class CourseService {
   upvoteCourse (id: string) {
     return this.apollo.mutate({
       mutation: gql`
-        mutation upvote($id: String!){
+        mutation UpvoteCourse($id: String!){
           upvote(id: $id){
             id
             title
             voteCount
           }
-        }
+        }        
       `,
       variables: {
         id: id

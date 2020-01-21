@@ -9,7 +9,7 @@ import { CourseService } from '../course.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnChanges {
   @Input() searchTerm: String;
 
   courses: Observable<any>;
@@ -17,6 +17,11 @@ export class ListComponent implements OnInit {
   constructor(private courseService: CourseService) { }
 
   ngOnInit() {
+
+    this.courses = this.courseService.getAllCourses(this.searchTerm);
+  }
+
+  ngOnChanges() {
     this.courses = this.courseService.getAllCourses(this.searchTerm);
   }
   
